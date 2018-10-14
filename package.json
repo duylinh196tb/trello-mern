@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "dev:client": "cd client && yarn start",
+    "dev:server": "cd server && yarn run dev"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
