@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Task from "./Task";
 import { Droppable, Draggable } from "react-beautiful-dnd";
+import { actCreateTask } from "../../redux/actions/boards";
+import { connect } from "react-redux";
 
 const Input = styled.input`
   border: 1px solid lightgrey;
@@ -29,10 +31,25 @@ const TaskList = styled.div`
   min-height: 100px;
 `;
 
-export default class componentName extends Component {
+class Column extends Component {
+  state = {
+    taskContent: ""
+  };
+
   handKeyPress = e => {
     if (e.key === "Enter") {
-      console.log("Enter");
+      this.addTask();
+    }
+  };
+
+  addTask = () => {
+    if (this.state.taskContent) {
+      this.props.actCreateTask({
+        content: this.state.taskContent,
+        board: this.props.board._id,
+        column: this.props.column._id
+      });
+      this.setState({ taskContent: "" });
     }
   };
 
@@ -57,7 +74,11 @@ export default class componentName extends Component {
                   <TaskList style={{ padding: 0 }}>
                     <Input
                       placeholder="Thêm công việc"
-                      onBlur={() => console.log("err")}
+                      value={this.state.taskContent}
+                      onChange={e =>
+                        this.setState({ taskContent: e.target.value })
+                      }
+                      onBlur={this.addTask}
                       onKeyPress={this.handKeyPress}
                     />
                   </TaskList>
@@ -71,3 +92,10 @@ export default class componentName extends Component {
     );
   }
 }
+
+export default connect(
+  state => ({
+    board: state.BoardSelected
+  }),
+  { actCreateTask }
+)(Column);

@@ -6,7 +6,10 @@ import {
   DELETE_BOARD,
   UPDATE_BOARD,
   SAVE_GET_ALL_BOARDS,
-  SAVE_GET_BOARD
+  SAVE_GET_BOARD,
+  // TASKS
+  CREATE_TASK,
+  CREATE_COLUMN
 } from "./types";
 
 export const actCreateBoard = (...args) => ({
@@ -49,4 +52,17 @@ export const saveAllBoards = payload => ({
 export const saveBoard = payload => ({
   type: SAVE_GET_BOARD,
   payload
+});
+
+// TASKS
+
+export const actCreateTask = (...args) => ({
+  type: CREATE_TASK,
+  args
+});
+
+// COLUMNS
+export const actCreateColumn = (...args) => ({
+  type: CREATE_COLUMN,
+  args
 });

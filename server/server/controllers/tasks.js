@@ -9,9 +9,10 @@ const createTask = async (req, res) => {
 
     const { column, board } = req.body;
 
-    const data = await Task.create({
+    let data = await Task.create({
       ...req.body
     });
+    console.log(data);
 
     await Promise.all([
       Column.findByIdAndUpdate(column, {
@@ -23,7 +24,13 @@ const createTask = async (req, res) => {
     ]);
 
     if (data) {
-      res.json(service.response.success('Create task success!!!', data));
+      res.json(
+        service.response.success('Create task success!!!', {
+          _id: data._id,
+          content: data.content,
+          column
+        })
+      );
     } else {
       res.json(service.response.databaseError('Loi database'));
     }

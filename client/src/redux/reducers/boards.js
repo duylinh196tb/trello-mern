@@ -7,6 +7,8 @@ export default (state = initialState, { type, payload }) => {
       return [...payload];
     case SAVE_CREATE_BOARD:
       return [...state, { ...payload }];
+
+      
     default:
       return state;
   }

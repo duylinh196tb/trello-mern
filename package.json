@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "dev:client": "cd client && yarn start",
-    "dev:server": "cd server && yarn run dev"
+    "client": "cd client && yarn start",
+    "server": "cd server && yarn run dev",
+    "db": "sudo service mongod start"
   },
   "dependencies": {
     "axios": "^0.18.0"

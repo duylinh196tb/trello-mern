@@ -10,7 +10,7 @@ const BoardWrapper = styled.div`
 
 class BoardIndex extends React.Component {
   componentDidMount() {
-    this.props.actGetBoard(this.props.match.params.boards_id);
+    this.props.actGetBoard(this.props.match.params.boards_id, (err, res) => {});
   }
 
   render() {

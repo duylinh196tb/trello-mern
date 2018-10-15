@@ -3,10 +3,9 @@ import "@atlaskit/css-reset";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import Column from "./Column";
-import { Button } from "../styles/elements.styles";
 import update from "immutability-helper";
-import initialData from "./initialData";
-
+import { connect } from "react-redux";
+import { actCreateColumn } from "../../redux/actions/boards";
 const Container = styled.div`
   display: flex;
 `;
@@ -32,7 +31,8 @@ class Board extends React.Component {
   state = {
     tasks: [],
     columns: [],
-    columnOrder: []
+    columnOrder: [],
+    titleColumn: ""
   };
 
   componentDidMount() {
@@ -45,8 +45,23 @@ class Board extends React.Component {
     }
   }
 
+  addColumn = () => {
+    if (this.state.titleColumn)
+      this.props.actCreateColumn({
+        title: this.state.titleColumn,
+        board: this.state._id
+      });
+
+    this.setState({ titleColumn: "" });
+  };
+
   handleBlur = e => {
-    console.log("dsa");
+    this.addColumn();
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.addColumn();
   };
 
   onDragEnd = result => {
@@ -130,7 +145,6 @@ class Board extends React.Component {
     );
   };
   render() {
-    console.log(this.props.board);
     let { columnOrder, columns, tasks } = this.state;
 
     return (
@@ -161,16 +175,15 @@ class Board extends React.Component {
                   />
                 );
               })}
-              <Form>
+              <Form onSubmit={this.handleSubmit}>
                 <input
                   type="text"
                   onBlur={this.handleBlur}
                   placeholder="Nhập tên cột"
+                  value={this.state.titleColumn}
+                  onChange={e => this.setState({ titleColumn: e.target.value })}
                 />
-                <div className="btnGroup">
-                  {/* <Button>OK</Button>
-                  <Button>Cancel</Button> */}
-                </div>
+                {/* <div className="btnGroup" /> */}
               </Form>
               {provided.placeholder}
             </Container>
@@ -181,4 +194,7 @@ class Board extends React.Component {
   }
 }
 
-export default Board;
+export default connect(
+  null,
+  { actCreateColumn }
+)(Board);
