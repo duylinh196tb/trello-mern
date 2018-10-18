@@ -4,12 +4,19 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { library } from "@fortawesome/fontawesome-svg-core";
 // import "./scss/style.scss";
-import { faSearch, faPlus, faBell } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSearch,
+  faPlus,
+  faBell,
+  faEnvelope,
+  faKey,
+  faUser
+} from "@fortawesome/free-solid-svg-icons";
 import App from "./Containers/App/App";
 import "antd/dist/antd.css";
 import { Provider } from "react-redux";
 import store from "./redux";
-library.add(faSearch, faPlus, faBell);
+library.add(faSearch, faPlus, faBell, faEnvelope, faKey, faUser);
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 

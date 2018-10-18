@@ -16,7 +16,7 @@ const generatorToken = (id, baseToken) => {
 
 const register = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
     const user = await User.findOne({ email });
     if (user) {
       return res.json({
@@ -27,6 +27,7 @@ const register = async (req, res) => {
 
     const newUser = await User.create({
       email,
+      name,
       password: bcrypt.hashSync(password, 8),
       baseToken: uuidv4()
     });
@@ -43,6 +44,7 @@ const register = async (req, res) => {
       message: 'register success!!!',
       data: {
         email: newUser.email,
+        name: newUser.name,
         baseToken: newUser.baseToken,
         token: generatorToken(newUser._id, newUser.baseToken)
       }
@@ -62,6 +64,7 @@ const loginEmail = async (req, res) => {
         code: 200,
         data: {
           email: user.email,
+          name: user.name,
           token: generatorToken(user.id, user.baseToken)
         }
       });

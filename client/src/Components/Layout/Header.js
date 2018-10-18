@@ -3,10 +3,14 @@ import { HeaderWrapper, Logo } from "./layout.style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import BtnBoard from "./BtnBoard";
+import BtnLogin from "./BtnLogin";
+import { connect } from "react-redux";
+import User from "./User";
 
 const LeftMenu = ({}) => (
   <div>
     <ul>
+      <li style={{ opacity: 0 }} />
       <li>
         <Link to="/" style={{ textDecoration: "none", color: "#fff" }}>
           Trang chủ
@@ -25,15 +29,16 @@ const LeftMenu = ({}) => (
   </div>
 );
 
-const RightMenu = ({}) => (
+const RightMenu = ({ userName }) => (
   <div>
     <ul>
+      <li style={{ opacity: 0 }} />
       <BtnBoard />
 
       <li>
         <FontAwesomeIcon color="#FFF" icon="bell" />
       </li>
-      <li>DL</li>
+      {userName ? <User userName={userName} /> : <BtnLogin />}
     </ul>
   </div>
 );
@@ -44,10 +49,15 @@ class Header extends Component {
       <HeaderWrapper>
         <LeftMenu />
         <Logo> Trallo</Logo>
-        <RightMenu />
+        <RightMenu userName={this.props.userName} />
       </HeaderWrapper>
     );
   }
 }
 
-export default Header;
+export default connect(
+  state => ({
+    userName: state.Auth.name
+  }),
+  {}
+)(Header);

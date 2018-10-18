@@ -18,7 +18,7 @@ const persistConfig = {
   key: "Real-Estate",
   storage,
   // debounce: 500,
-  blacklist: ["ui", "requests", "Ecommerce", "Package"]
+  blacklist: []
 };
 const allReducer = combineReducers({
   ...reducers,
