@@ -1,4 +1,48 @@
-const { CODE } = require('../constants/index');
+const jwt = require('jsonwebtoken');
+const CODE = require('../constants/index');
+const User = require('../models/user');
+
+const isVerifiedToken = async (req, res, next) => {
+  if (req.get('Authorization') === undefined) {
+    return res.json({
+      code: CODE.INVALID_TOKEN,
+      message: 'Request thiếu dữ liệu Authorization & Access Token'
+    });
+  }
+
+  const accessToken = req.get('Authorization');
+  if (accessToken) {
+    jwt.verify(accessToken, process.env.SECRET, async (err, decoded) => {
+      if (err) {
+        return res.json({
+          code: CODE.INVALID_TOKEN,
+          message: 'Lỗi! Không thể xác thực token',
+          error: err.message
+        });
+      }
+
+      const user = await User.findOne({
+        baseToken: decoded.baseToken
+      });
+
+      if (user) {
+        req.user = user;
+        req.token = accessToken;
+        next();
+      } else {
+        return res.json({
+          code: CODE.INVALID_TOKEN,
+          message: 'User không tồn tại trong hệ thống!'
+        });
+      }
+    });
+  } else {
+    return res.json({
+      code: CODE.INVALID_TOKEN,
+      message: 'Access token không được để rỗng!'
+    });
+  }
+};
 
 const fieldValidation = (input, template) => {
   for (let item of template) {
@@ -37,8 +81,4 @@ const requiredField = async (req, res, body, params, query, next) => {
   }
 };
 
-module.exports = { requiredField };
-{
-}
-
-[];
+module.exports = { requiredField, isVerifiedToken };

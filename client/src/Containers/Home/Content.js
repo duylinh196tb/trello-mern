@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { BoardCard } from "./home.style";
 import { Link } from "react-router-dom";
-import data from "./fakeData";
 import { connect } from "react-redux";
 
 class Content extends Component {
@@ -28,7 +27,8 @@ class Content extends Component {
 
 export default connect(
   state => ({
-    boards: state.Boards
+    boards: state.Boards,
+    token: state.Auth.token
   }),
   {}
 )(Content);

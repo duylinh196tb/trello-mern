@@ -15,7 +15,7 @@ const routeMiddleware = routerMiddleware(history);
 const middlewares = [sagaMiddleware, routeMiddleware];
 
 const persistConfig = {
-  key: "Real-Estate",
+  key: "TL",
   storage,
   // debounce: 500,
   blacklist: []

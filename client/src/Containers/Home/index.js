@@ -11,7 +11,13 @@ import { connect } from "react-redux";
 
 class Home extends Component {
   componentDidMount() {
-    this.props.actGetAllBoards();
+    // this.props.actGetAllBoards(this.props.token);
+    // console.log("abc", this.props.token);
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.token) {
+      this.props.actGetAllBoards(nextProps.token);
+    }
   }
 
   render() {
@@ -30,7 +36,7 @@ class Home extends Component {
           </div>
         </SideBarWrapper>
         <ContentWrapper>
-          <Content />
+          {this.props.token ? <Content /> : "You need login!!!"}
         </ContentWrapper>
       </ContainerWrapper>
     );
@@ -38,6 +44,8 @@ class Home extends Component {
 }
 
 export default connect(
-  null,
+  state => ({
+    token: state.Auth.token
+  }),
   { actGetAllBoards }
 )(Home);

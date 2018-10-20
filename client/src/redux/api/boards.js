@@ -1,11 +1,15 @@
 import { API } from "./common";
 
+const headerAuth = token => {
+  return { headers: { Authorization: `${token}` } };
+};
+
 export default {
-  createBoard: data => API.post("/boards", data),
-  getAllBoards: () => API.get("/boards"),
-  getBoard: id => API.get(`/boards/${id}`),
+  createBoard: (token, data) => API.post("/boards", data, headerAuth(token)),
+  getAllBoards: token => API.get("/boards", {}, headerAuth(token)),
+  getBoard: (token, id) => API.get(`/boards/${id}`, {}, headerAuth(token)),
 
   // Tasks
-  createTask: data => API.post("/tasks", data),
-  createColumn: data => API.post("/columns", data)
+  createTask: (token, data) => API.post("/tasks", data, headerAuth(token)),
+  createColumn: (token, data) => API.post("/columns", data, headerAuth(token))
 };

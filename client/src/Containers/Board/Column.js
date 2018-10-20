@@ -44,7 +44,7 @@ class Column extends Component {
 
   addTask = () => {
     if (this.state.taskContent) {
-      this.props.actCreateTask({
+      this.props.actCreateTask(this.props.token, {
         content: this.state.taskContent,
         board: this.props.board._id,
         column: this.props.column._id
@@ -95,7 +95,8 @@ class Column extends Component {
 
 export default connect(
   state => ({
-    board: state.BoardSelected
+    board: state.BoardSelected,
+    token: state.Auth.token
   }),
   { actCreateTask }
 )(Column);

@@ -15,7 +15,7 @@ class BtnBoard extends Component {
   };
 
   handleOk = async e => {
-    this.props.actCreateBoard({
+    this.props.actCreateBoard(this.props.token, {
       title: this.state.title
     });
     this.setState({
@@ -60,7 +60,9 @@ class BtnBoard extends Component {
 }
 
 export default connect(
-  null,
+  state => ({
+    token: state.Auth.token
+  }),
   {
     actCreateBoard
   }

@@ -129,15 +129,15 @@ export const createRequestSaga = ({
         const response = await chainRequest;
         if (
           response.ok &&
-          response.status >= 200 &&
-          response.status < 300
-          // response.data.code >= 200 &&
-          // response.data.code < 300
+          // response.status >= 200 &&
+          // response.status < 300
+          response.data.code >= 200 &&
+          response.data.code < 300
         ) {
           return response.data;
         }
-        if (response.status === 403) {
-          message.error("Bạn không có quyền thực hiện hành động này");
+        if (response.data.code === 401) {
+          message.error("Wrong token");
         }
         return rejectErrors(response);
       };

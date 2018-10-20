@@ -10,7 +10,19 @@ const BoardWrapper = styled.div`
 
 class BoardIndex extends React.Component {
   componentDidMount() {
-    this.props.actGetBoard(this.props.match.params.boards_id, (err, res) => {});
+    this.props.token &&
+      this.props.actGetBoard(
+        this.props.token,
+        this.props.match.params.boards_id
+      );
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.props.token !== nextProps.token &&
+      this.props.actGetBoard(
+        nextProps.token,
+        this.props.match.params.boards_id
+      );
   }
 
   render() {
@@ -24,7 +36,8 @@ class BoardIndex extends React.Component {
 
 export default connect(
   state => ({
-    board: state.BoardSelected
+    board: state.BoardSelected,
+    token: state.Auth.token
   }),
   { actGetBoard }
 )(BoardIndex);

@@ -15,6 +15,12 @@ const BoardSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Task'
     }
+  ],
+  users: [
+    {
+      type: Schema.Types.String,
+      ref: 'User'
+    }
   ]
 });
 

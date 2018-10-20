@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Modal } from "antd";
+import { logout } from "../../redux/actions/auth";
+import { connect } from "react-redux";
 
 const init = { visible: false };
 
@@ -9,7 +11,7 @@ class User extends Component {
   render() {
     return (
       <React.Fragment>
-        <li>{this.props.userName}</li>;
+        <li onClick={() => this.props.logout()}>{this.props.userName}</li>;
         <Modal
           title={"Thông tin tài khoản"}
           visible={this.state.visible}
@@ -23,4 +25,7 @@ class User extends Component {
   }
 }
 
-export default User;
+export default connect(
+  null,
+  { logout }
+)(User);

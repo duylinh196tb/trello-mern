@@ -47,7 +47,7 @@ class Board extends React.Component {
 
   addColumn = () => {
     if (this.state.titleColumn)
-      this.props.actCreateColumn({
+      this.props.actCreateColumn(this.props.token, {
         title: this.state.titleColumn,
         board: this.state._id
       });
@@ -195,6 +195,8 @@ class Board extends React.Component {
 }
 
 export default connect(
-  null,
+  state => ({
+    token: state.Auth.token
+  }),
   { actCreateColumn }
 )(Board);
