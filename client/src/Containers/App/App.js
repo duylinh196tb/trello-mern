@@ -6,10 +6,10 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <React.Fragment>
+        <div>
           <Header />
           <AppRouter />
-        </React.Fragment>
+        </div>
       </Router>
     );
   }

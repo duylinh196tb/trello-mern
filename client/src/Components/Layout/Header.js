@@ -29,7 +29,7 @@ const LeftMenu = ({}) => (
   </div>
 );
 
-const RightMenu = ({ userName }) => (
+const RightMenu = ({ isLogin }) => (
   <div>
     <ul>
       <li style={{ opacity: 0 }} />
@@ -38,7 +38,7 @@ const RightMenu = ({ userName }) => (
       <li>
         <FontAwesomeIcon color="#FFF" icon="bell" />
       </li>
-      {userName ? <User userName={userName} /> : <BtnLogin />}
+      {isLogin ? <User isLogin={isLogin} /> : <BtnLogin />}
     </ul>
   </div>
 );
@@ -49,7 +49,7 @@ class Header extends Component {
       <HeaderWrapper>
         <LeftMenu />
         <Logo> Trallo</Logo>
-        <RightMenu userName={this.props.userName} />
+        <RightMenu isLogin={this.props.isLogin} />
       </HeaderWrapper>
     );
   }
@@ -57,7 +57,7 @@ class Header extends Component {
 
 export default connect(
   state => ({
-    userName: state.Auth.name
+    isLogin: state.Auth.loggedIn
   }),
   {}
 )(Header);

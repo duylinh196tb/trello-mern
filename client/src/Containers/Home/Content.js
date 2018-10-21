@@ -5,18 +5,22 @@ import { connect } from "react-redux";
 
 class Content extends Component {
   renderBoardCards(data) {
-    return data.map(board => (
-      <Link to={`/boards/${board._id}`}>
-        <BoardCard>{board.title}</BoardCard>
-      </Link>
-    ));
+    let result = null;
+    if (data.length > 0)
+      result = data.map(board => (
+        <Link to={`/boards/${board._id}`}>
+          <BoardCard>{board.title}</BoardCard>
+        </Link>
+      ));
+
+    return result;
   }
 
   render() {
     // console.log(this.props.boards.Boards);
     return (
       <React.Fragment>
-        <h3>Bảng cá nhân</h3>
+        <h3>Bảng của {this.props.email || "bạn"}</h3>
         <div>
           {this.props.boards && this.renderBoardCards(this.props.boards)}
         </div>
@@ -28,7 +32,8 @@ class Content extends Component {
 export default connect(
   state => ({
     boards: state.Boards,
-    token: state.Auth.token
+    token: state.Auth.token,
+    email: state.Auth.email
   }),
   {}
 )(Content);

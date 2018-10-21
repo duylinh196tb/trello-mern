@@ -11,7 +11,7 @@ class User extends Component {
   render() {
     return (
       <React.Fragment>
-        <li onClick={() => this.props.logout()}>{this.props.userName}</li>;
+        <li onClick={() => this.props.logout()}>Đăng xuất </li>;
         <Modal
           title={"Thông tin tài khoản"}
           visible={this.state.visible}

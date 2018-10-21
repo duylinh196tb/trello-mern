@@ -9,7 +9,11 @@ import {
   SAVE_GET_BOARD,
   // TASKS
   CREATE_TASK,
-  CREATE_COLUMN
+  CREATE_COLUMN,
+  UPDATE_TASK,
+  DELETE_TASK,
+  UPDATE_COLUMN,
+  DELETE_COLUMN
 } from "./types";
 
 export const actCreateBoard = (...args) => ({
@@ -61,8 +65,28 @@ export const actCreateTask = (...args) => ({
   args
 });
 
+export const actUpdateTask = (...args) => ({
+  type: UPDATE_TASK,
+  args
+});
+
+export const actDeleteTask = (...args) => ({
+  type: DELETE_TASK,
+  args
+});
+
 // COLUMNS
 export const actCreateColumn = (...args) => ({
   type: CREATE_COLUMN,
+  args
+});
+
+export const actUpdateColumn = (...args) => ({
+  type: UPDATE_COLUMN,
+  args
+});
+
+export const actDeleteColumn = (...args) => ({
+  type: DELETE_COLUMN,
   args
 });

@@ -11,8 +11,7 @@ import { connect } from "react-redux";
 
 class Home extends Component {
   componentDidMount() {
-    // this.props.actGetAllBoards(this.props.token);
-    // console.log("abc", this.props.token);
+    this.props.token && this.props.actGetAllBoards(this.props.token);
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.token) {

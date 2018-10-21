@@ -1,11 +1,16 @@
 // Column
 export const CREATE_COLUMN = "CREATE_COLUMN";
 export const SAVE_CREATE_COLUMN = "SAVE_CREATE_COLUMN";
+export const DELETE_COLUMN = "DELETE_COLUMN";
+export const UPDATE_COLUMN = "UPDATE_COLUMN";
 
 // Task
 export const CREATE_TASK = "CREATE_TASK";
 export const SAVE_CREATE_TASK = "SAVE_CREATE_TASK";
+export const DELETE_TASK = "DELETE_TASK";
+export const UPDATE_TASK = "UPDATE_TASK";
 
+// Board
 export const CREATE_BOARD = "CREATE_BOARD";
 export const GET_ALL_BOARDS = "GET_ALL_BOARDS";
 export const GET_BOARD = "GET_BOARD";

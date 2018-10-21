@@ -39,14 +39,16 @@ const createBoard = async (req, res) => {
 const getAllBoards = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.user.email });
-    console.log(user);
+    // console.log({ user });
 
     const boards = [];
     user.boards.forEach(board => {
       boards.push(Board.findById(board));
     });
+    // boards = boards.filter(board => board !== null);
 
-    const data = await Promise.all(boards);
+    let data = await Promise.all(boards);
+    // data = data.filter(d => d !== null);
 
     if (data) {
       res.json(
@@ -82,7 +84,7 @@ const getBoard = async (req, res) => {
       return res.json(service.response.objectNotFound('Khong tim thay board'));
     }
 
-    console.log(data[0]);
+    // console.log(data[0]);
     const resData = {
       _id: data[0]._id,
       title: data[0].title,
@@ -154,7 +156,7 @@ const updateBoard = async (req, res) => {
         { email: addUser || removeUser },
         {
           [(addUser && '$push') || (removeUser && '$pull')]: {
-            boards: addUser && removeUser
+            boards: data._id
           }
         }
       );

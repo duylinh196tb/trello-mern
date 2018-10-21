@@ -4,6 +4,7 @@ import Board from "./Board";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { actGetBoard } from "../../redux/actions/boards";
+import ListUsers from "./listUsers";
 const BoardWrapper = styled.div`
   margin: 50px;
 `;
@@ -28,6 +29,7 @@ class BoardIndex extends React.Component {
   render() {
     return (
       <BoardWrapper>
+        <ListUsers />
         <Board board={this.props.board} />
       </BoardWrapper>
     );

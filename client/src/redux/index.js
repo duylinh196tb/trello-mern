@@ -18,7 +18,7 @@ const persistConfig = {
   key: "TL",
   storage,
   // debounce: 500,
-  blacklist: []
+  blacklist: ["Boards", "BoardSelected"]
 };
 const allReducer = combineReducers({
   ...reducers,

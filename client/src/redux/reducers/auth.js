@@ -25,7 +25,7 @@ const init = {
   loggedIn: false,
   token: null,
   refreshToken: null,
-  name: ""
+  email: ""
 };
 
 export default (state = init, { type, payload }) => {
@@ -35,7 +35,7 @@ export default (state = init, { type, payload }) => {
     case APP_SAVE_LOGGED_USER: {
       return {
         ...state,
-        name: payload.data.name,
+        email: payload.data.email,
         token: payload.data.token
         // refreshToken: payload.data.refreshToken
       };

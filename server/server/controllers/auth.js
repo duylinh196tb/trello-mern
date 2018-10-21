@@ -40,8 +40,8 @@ const register = async (req, res) => {
     }
 
     res.json({
-      coded: 200,
-      message: 'register success!!!',
+      code: 200,
+      message: 'Đăng kí thành công !!!',
       data: {
         email: newUser.email,
         name: newUser.name,
@@ -66,7 +66,8 @@ const loginEmail = async (req, res) => {
           email: user.email,
           name: user.name,
           token: generatorToken(user.id, user.baseToken)
-        }
+        },
+        message: 'Đăng nhập thành công !!!'
       });
     }
     return res.json({

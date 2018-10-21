@@ -53,28 +53,36 @@ class BtnLogin extends Component {
     try {
       e.preventDefault();
       const { login, register } = this.props;
-      const { email, password, password2, isLogin, name } = this.state;
+      const { email, password, password2, isLogin } = this.state;
+
+      if (!email || !password) {
+        message.warning("Cần điền đầy đủ các trường");
+      }
 
       // Login
       if (isLogin && email && password) {
         const res = await actPromise(login, [{ email, password }]);
-        res.code === 200 && message.success("Đăng nhập thành công");
+        if (res.code === 200) {
+          // message.success("Đăng nhập thành công");
+          this.setState(initial);
+        }
         if (res.code === 404)
           return message.error("Sai tài khoản hoặc mật khẩu");
       }
 
       // Signup
-      if (!isLogin && email && password && password2 && name) {
+      if (!isLogin && email && password && password2) {
         if (password !== password2)
           return message.warning("2 Mật khẩu phải trùng nhau");
         if (password.length < 6)
           return message.warning("Mật khẩu phải có ít nhất 6 ký tự");
-        await actPromise(register, [{ email, password, name }]);
-        message.success("Đăng ký thành công");
+        await actPromise(register, [{ email, password }]);
+        // message.success("Đăng ký thành công");
+        // this.setState(initial);
       }
-      this.setState(initial);
     } catch (error) {
-      message.error(error.message);
+      // message.error(error.message);
+      console.error(error);
     }
   };
 
@@ -110,17 +118,17 @@ class BtnLogin extends Component {
             </div>
             <form onSubmit={this.handleSubmit}>
               <InputWrapper>
-                <FontAwesomeIcon icon="envelope" />
+                <FontAwesomeIcon icon="user" />
                 <input
                   autoComplete="off"
-                  type="email"
+                  type="text"
                   name="email"
                   value={email}
                   onChange={this.handleChange}
                   placeholder="Tài khoản"
                 />
               </InputWrapper>
-              {!isLogin ? (
+              {/* {!isLogin ? (
                 <InputWrapper>
                   <FontAwesomeIcon icon="user" />
                   <input
@@ -132,7 +140,7 @@ class BtnLogin extends Component {
                     placeholder="Tên hiển thị"
                   />
                 </InputWrapper>
-              ) : null}
+              ) : null} */}
               <InputWrapper>
                 <FontAwesomeIcon icon="key" />
                 <input

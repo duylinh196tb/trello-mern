@@ -5,7 +5,11 @@ import styled from "styled-components";
 import Column from "./Column";
 import update from "immutability-helper";
 import { connect } from "react-redux";
-import { actCreateColumn } from "../../redux/actions/boards";
+import {
+  actCreateColumn,
+  actUpdateBoard,
+  actUpdateColumn
+} from "../../redux/actions/boards";
 const Container = styled.div`
   display: flex;
 `;
@@ -64,6 +68,10 @@ class Board extends React.Component {
     this.addColumn();
   };
 
+  updateColumn = (taskOrder, id) => {
+    this.props.actUpdateColumn(this.props.token, { taskOrder }, id);
+  };
+
   onDragEnd = result => {
     // console.log(result);
     const { columns } = this.state;
@@ -85,7 +93,14 @@ class Board extends React.Component {
           columnOrder: {
             $splice: [[source.index, 1], [destination.index, 0, draggableId]]
           }
-        })
+        }),
+        () => {
+          this.props.actUpdateBoard(
+            this.props.token,
+            { columnOrder: this.state.columnOrder },
+            this.state._id
+          );
+        }
       );
     }
 
@@ -102,12 +117,22 @@ class Board extends React.Component {
         }
       });
 
+      console.log({ newColumn });
+
       return this.setState(
         update(this.state, {
           columns: {
             $splice: [[columnIndex, 1, newColumn]]
           }
-        })
+        }),
+        () => {
+          this.updateColumn(newColumn.taskOrder, newColumn._id);
+          // this.props.actUpdateColumn(
+          //   this.props.token,
+          //   { taskOrder: newColumn.taskOrder },
+          //   newColumn._id
+          // );
+        }
       );
     }
 
@@ -141,7 +166,11 @@ class Board extends React.Component {
             [finishColumnIndex, 1, newColumnFinish]
           ]
         }
-      })
+      }),
+      () => {
+        this.updateColumn(newColumnStart.taskOrder, newColumnStart._id);
+        this.updateColumn(newColumnFinish.taskOrder, newColumnFinish._id);
+      }
     );
   };
   render() {
@@ -198,5 +227,5 @@ export default connect(
   state => ({
     token: state.Auth.token
   }),
-  { actCreateColumn }
+  { actCreateColumn, actUpdateBoard, actUpdateColumn }
 )(Board);

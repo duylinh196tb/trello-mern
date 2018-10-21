@@ -12,19 +12,24 @@ import {
   removeLoggedUser
 } from "../actions/auth";
 import { createRequestSaga } from "./common";
+import { message } from "antd";
 const requestLogin = createRequestSaga({
   request: auth.login,
   key: "login",
   cancel: APP_LOGOUT,
   success: [res => saveLoggedUser(res), () => setAuthState(true)],
-  failure: []
+  failure: [],
+  functionSuccess: [res => message.success(res.message)],
+  functionFailure: [res => message.error(res.message)]
 });
 
 const requestRegister = createRequestSaga({
   request: auth.register,
   key: "register",
   success: [],
-  failure: []
+  failure: [],
+  functionSuccess: [res => message.success(res.message)],
+  functionFailure: [res => message.error(res.message)]
 });
 
 const requestVerifyToken = createRequestSaga({
